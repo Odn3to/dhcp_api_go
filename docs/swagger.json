@@ -1,0 +1,159 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Gerencia e lida com as escritas para o serviço Kea",
+        "title": "DHCP - API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "172.23.58.10:8005",
+    "basePath": "/dhcp",
+    "paths": {
+        "/dhcp/conf": {
+            "post": {
+                "description": "Realiza a configuração do DHCP e restarta o serviço Kea",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Configurar DHCP",
+                "operationId": "configDhcp",
+                "parameters": [
+                    {
+                        "description": "Configurações do DHCP",
+                        "name": "ConfigDhcp",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dhcp.DataNetworkConfigurations"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dhcp.RetornoConf"
+                        }
+                    }
+                }
+            }
+        },
+        "/dhcp/data": {
+            "get": {
+                "description": "Retorna os Leases",
+                "summary": "Get Leases",
+                "operationId": "getLeases",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dhcp.RetornoConf"
+                        }
+                    }
+                }
+            }
+        },
+        "/dhcp/initConf": {
+            "get": {
+                "description": "Retorna as configurações do DHCP",
+                "summary": "Get config DHCP",
+                "operationId": "getConfigDHCP",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dhcp.DataNetworkConfigurations"
+                        }
+                    }
+                }
+            }
+        },
+        "/dhcp/interfaces": {
+            "get": {
+                "description": "Retorna as interfaces",
+                "summary": "Get interfaces",
+                "operationId": "getInterfaces",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dhcp.RetornoConf"
+                        }
+                    }
+                }
+            }
+        },
+        "/dhcp/status": {
+            "get": {
+                "description": "Retorna o Status do serviço Kea DHCP",
+                "summary": "Status do Serviço Kea DHCP",
+                "operationId": "status",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dhcp.RetornoStatus"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dhcp.DataNetworkConfigurations": {
+            "type": "object",
+            "properties": {
+                "dnsPrimario": {
+                    "type": "string"
+                },
+                "dnsSecundario": {
+                    "type": "string"
+                },
+                "gateway": {
+                    "type": "string"
+                },
+                "lease": {
+                    "type": "string"
+                },
+                "netInterface": {
+                    "type": "string"
+                },
+                "rangeFinal": {
+                    "type": "string"
+                },
+                "rangeInicial": {
+                    "type": "string"
+                },
+                "subNet": {
+                    "type": "string"
+                }
+            }
+        },
+        "dhcp.RetornoConf": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string"
+                }
+            }
+        },
+        "dhcp.RetornoStatus": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

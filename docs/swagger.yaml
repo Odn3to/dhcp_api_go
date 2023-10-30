@@ -1,0 +1,105 @@
+basePath: /dhcp
+definitions:
+  dhcp.DataNetworkConfigurations:
+    properties:
+      dnsPrimario:
+        type: string
+      dnsSecundario:
+        type: string
+      gateway:
+        type: string
+      lease:
+        type: string
+      netInterface:
+        type: string
+      rangeFinal:
+        type: string
+      rangeInicial:
+        type: string
+      subNet:
+        type: string
+    type: object
+  dhcp.RetornoConf:
+    properties:
+      data:
+        type: string
+    type: object
+  dhcp.RetornoStatus:
+    properties:
+      class:
+        type: string
+      text:
+        type: string
+    type: object
+host: 172.23.58.10:8005
+info:
+  contact: {}
+  description: Gerencia e lida com as escritas para o serviço Kea
+  title: DHCP - API
+  version: "1.0"
+paths:
+  /dhcp/conf:
+    post:
+      consumes:
+      - application/json
+      description: Realiza a configuração do DHCP e restarta o serviço Kea
+      operationId: configDhcp
+      parameters:
+      - description: Configurações do DHCP
+        in: body
+        name: ConfigDhcp
+        required: true
+        schema:
+          $ref: '#/definitions/dhcp.DataNetworkConfigurations'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dhcp.RetornoConf'
+      summary: Configurar DHCP
+  /dhcp/data:
+    get:
+      description: Retorna os Leases
+      operationId: getLeases
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dhcp.RetornoConf'
+      summary: Get Leases
+  /dhcp/initConf:
+    get:
+      description: Retorna as configurações do DHCP
+      operationId: getConfigDHCP
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dhcp.DataNetworkConfigurations'
+      summary: Get config DHCP
+  /dhcp/interfaces:
+    get:
+      description: Retorna as interfaces
+      operationId: getInterfaces
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dhcp.RetornoConf'
+      summary: Get interfaces
+  /dhcp/status:
+    get:
+      description: Retorna o Status do serviço Kea DHCP
+      operationId: status
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dhcp.RetornoStatus'
+      summary: Status do Serviço Kea DHCP
+schemes:
+- http
+- https
+swagger: "2.0"
